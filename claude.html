@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows PC AI 코딩 완전 가이드 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a28;
+  --bg-code: #0d1117;
+  --accent-blue: #4f8fff;
+  --accent-cyan: #00d4ff;
+  --accent-purple: #a78bfa;
+  --accent-green: #34d399;
+  --accent-orange: #fb923c;
+  --accent-pink: #f472b6;
+  --accent-red: #f87171;
+  --text-primary: #e8e8f0;
+  --text-secondary: #9898b0;
+  --text-muted: #6b6b82;
+  --border: #2a2a3e;
+  --glow-blue: rgba(79, 143, 255, 0.15);
+  --glow-cyan: rgba(0, 212, 255, 0.1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.85; font-weight: 300; overflow-x: hidden; }
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg-primary); } ::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 3px; }
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(79,143,255,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(0,212,255,0.06) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(167,139,250,0.05) 0%, transparent 50%); animation: heroGlow 15s ease-in-out infinite alternate; }
+@keyframes heroGlow { 0%{transform:translate(0,0) rotate(0)} 100%{transform:translate(-3%,-3%) rotate(3deg)} }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero-badge { display: inline-block; padding: 0.4rem 1.2rem; border: 1px solid var(--accent-cyan); border-radius: 50px; font-size: 0.8rem; color: var(--accent-cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem; font-weight: 500; animation: fadeInUp 0.8s ease-out; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 1.15; margin-bottom: 1.5rem; animation: fadeInUp 0.8s ease-out 0.2s both; }
+.hero h1 .gradient-text { background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 2.5rem; animation: fadeInUp 0.8s ease-out 0.4s both; }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.toc-nav { position: sticky; top: 0; z-index: 100; background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.toc-nav-inner { display: flex; max-width: 1400px; margin: 0 auto; }
+.toc-nav a { padding: 1rem 1.2rem; color: var(--text-muted); text-decoration: none; font-size: 0.8rem; font-weight: 500; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.3s; letter-spacing: 0.5px; }
+.toc-nav a:hover { color: var(--accent-cyan); border-bottom-color: var(--accent-cyan); background: var(--glow-cyan); }
+.content-wrapper { max-width: 920px; margin: 0 auto; padding: 0 2rem 6rem; }
+.section { margin-top: 6rem; }
+.section-number { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent-cyan); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.5rem; }
+.section h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+.section-divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); border-radius: 2px; margin: 1rem 0 2rem; }
+.section h3 { font-size: 1.35rem; font-weight: 700; margin: 2.8rem 0 1rem; color: var(--accent-blue); display: flex; align-items: center; gap: 0.5rem; }
+.section h3 .icon { font-size: 1.2rem; }
+.section h4 { font-size: 1.1rem; font-weight: 500; margin: 2rem 0 0.8rem; color: var(--accent-purple); }
+.section p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 1rem; }
+.section ul, .section ol { color: var(--text-secondary); margin: 0.5rem 0 1.5rem 1.5rem; font-size: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.code-block { background: var(--bg-code); border: 1px solid var(--border); border-radius: 12px; margin: 1.2rem 0 1.5rem; overflow: hidden; }
+.code-header { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 1rem; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); }
+.code-lang { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 1px; }
+.code-dots { display: flex; gap: 6px; } .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.code-dots span:nth-child(1){background:#ff5f56} .code-dots span:nth-child(2){background:#ffbd2e} .code-dots span:nth-child(3){background:#27c93f}
+.code-block pre { padding: 1.2rem 1.5rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.7; color: #c9d1d9; }
+.cm { color: #6b7280; } .kw { color: #ff7b72; } .st { color: #a5d6ff; } .fn { color: #d2a8ff; } .vr { color: #79c0ff; }
+.info-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; margin: 1.5rem 0; position: relative; overflow: hidden; }
+.info-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.info-card.blue::before{background:linear-gradient(90deg,var(--accent-blue),var(--accent-cyan))} .info-card.purple::before{background:linear-gradient(90deg,var(--accent-purple),var(--accent-pink))} .info-card.green::before{background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))} .info-card.orange::before{background:linear-gradient(90deg,var(--accent-orange),var(--accent-pink))}
+.info-card .card-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-card.blue .card-title{color:var(--accent-cyan)} .info-card.purple .card-title{color:var(--accent-purple)} .info-card.green .card-title{color:var(--accent-green)} .info-card.orange .card-title{color:var(--accent-orange)}
+.info-card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.5rem 0; }
+.grid-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: all 0.3s; }
+.grid-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(79,143,255,0.1); }
+.grid-card .card-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+.grid-card h4 { color: var(--text-primary); margin: 0 0 0.5rem; font-weight: 700; }
+.grid-card p { font-size: 0.9rem; color: var(--text-muted); }
+.table-wrapper { overflow-x: auto; margin: 1.5rem 0; border-radius: 12px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { background: rgba(79,143,255,0.1); padding: 0.8rem 1rem; text-align: left; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); border-bottom: 1px solid var(--border); }
+td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+tr:last-child td{border-bottom:none} tr:hover td{background:rgba(255,255,255,0.02)}
+.flow { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.5rem 0; padding: 1.5rem; background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border); }
+.flow-step { background: linear-gradient(135deg, rgba(79,143,255,0.15), rgba(0,212,255,0.08)); border: 1px solid rgba(79,143,255,0.3); border-radius: 10px; padding: 0.6rem 1.2rem; font-size: 0.85rem; font-weight: 500; white-space: nowrap; }
+.flow-arrow { color: var(--accent-cyan); font-size: 1.2rem; }
+.tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin: 0.1rem; }
+.tag.free{background:rgba(52,211,153,0.15);color:var(--accent-green)} .tag.paid{background:rgba(251,146,60,0.15);color:var(--accent-orange)}
+@media (max-width: 768px) { .content-wrapper{padding:0 1.2rem 4rem} .section{margin-top:4rem} .section h2{font-size:1.7rem} .toc-nav a{padding:0.8rem 0.8rem;font-size:0.72rem} .flow{flex-direction:column;align-items:stretch;text-align:center} .flow-arrow{transform:rotate(90deg);align-self:center} }
+.footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+code:not(pre code) { background: rgba(79,143,255,0.12); color: var(--accent-cyan); padding: 0.15em 0.45em; border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+strong { color: var(--text-primary); font-weight: 700; }
+a { color: var(--accent-blue); text-decoration: none; } a:hover { text-decoration: underline; }
+.callout { display: flex; gap: 1rem; background: rgba(79,143,255,0.06); border-left: 3px solid var(--accent-blue); padding: 1.2rem 1.5rem; border-radius: 0 10px 10px 0; margin: 1.5rem 0; }
+.callout.warn { background: rgba(251,146,60,0.06); border-left-color: var(--accent-orange); }
+.callout.ok { background: rgba(52,211,153,0.06); border-left-color: var(--accent-green); }
+.callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.2rem; } .callout p { margin-bottom: 0; font-size: 0.95rem; }
+.workflow-diagram { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin: 2rem 0; text-align: center; }
+.workflow-diagram h4 { margin-top: 0; text-align: center; color: var(--accent-cyan); }
+.workflow-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+.workflow-box { padding: 0.7rem 1.4rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; }
+.wb-front{background:rgba(79,143,255,0.15);border:1px solid rgba(79,143,255,0.3);color:var(--accent-blue)} .wb-back{background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.3);color:var(--accent-purple)} .wb-db{background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:var(--accent-green)} .wb-tool{background:rgba(251,146,60,0.15);border:1px solid rgba(251,146,60,0.3);color:var(--accent-orange)} .wb-cloud{background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.3);color:var(--accent-pink)}
+.vert-arrow { font-size: 1.5rem; color: var(--text-muted); text-align: center; }
+.step-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1.8rem; margin: 1.2rem 0; position: relative; padding-left: 4rem; }
+.step-box .step-num { position: absolute; left: 1.2rem; top: 1.3rem; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)); color: var(--bg-primary); font-weight: 900; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
+.step-box h4 { color: var(--text-primary); margin: 0 0 0.5rem; font-weight: 700; font-size: 1.05rem; }
+.step-box p { color: var(--text-secondary); font-size: 0.93rem; margin-bottom: 0.3rem; }
+.compare-row { display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap; } .compare-col { flex: 1; min-width: 260px; } .compare-col h4 { text-align: center; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Windows PC · 2026 Edition</div>
+    <h1><span class="gradient-text">AI 코딩</span><br>완전 가이드</h1>
+    <p>Gemini CLI, Antigravity, Google AI Studio, Stitch부터 클라우드 배포까지 —<br>윈도우 PC에서 AI로 서비스를 만드는 전체 과정을 단계별로 상세히 안내합니다.</p>
+  </div>
+</section>
+
+<nav class="toc-nav"><div class="toc-nav-inner">
+  <a href="#techstack">기술 스택</a><a href="#gemini-cli">Gemini CLI</a><a href="#antigravity">Antigravity</a><a href="#ai-studio">AI Studio</a><a href="#stitch">Stitch</a><a href="#design-copy">디자인 카피</a><a href="#cloud-deploy">클라우드 배포</a>
+</div></nav>
+
+<div class="content-wrapper">
+
+<!-- ===== CH01: 기술 스택 ===== -->
+<section class="section" id="techstack">
+<div class="section-number">Chapter 01</div>
+<h2>핵심 기술 스택 이해하기</h2>
+<div class="section-divider"></div>
+
+<p>AI 코딩 도구를 다루기 전에, 현대 웹 서비스가 어떻게 구성되는지 기본 구조를 이해해야 합니다. 웹 서비스는 크게 <strong>프론트엔드</strong>(사용자가 보는 화면)와 <strong>백엔드</strong>(보이지 않는 곳에서 데이터를 처리하는 서버)로 나뉩니다.</p>
+
+<h3><span class="icon">🏗️</span> 프론트엔드와 백엔드란?</h3>
+
+<div class="info-card blue">
+<div class="card-title">🍽️ 레스토랑 비유로 이해하는 웹 아키텍처</div>
+<p><strong>프론트엔드 = 레스토랑 홀</strong> — 손님(사용자)이 직접 보고 상호작용하는 공간입니다. 메뉴판(UI), 인테리어(디자인), 웨이터와의 대화(인터랙션)가 여기에 해당합니다. HTML로 구조를, CSS로 디자인을, JavaScript/React로 동적 동작을 만듭니다.</p>
+<p><strong>백엔드 = 주방</strong> — 손님 눈에는 보이지 않지만, 주문을 받아서 요리(데이터 처리)를 하고, 재료 창고(DB)에서 재료를 꺼내 음식을 만들어 내보냅니다. FastAPI나 Node.js가 셰프 역할을 합니다.</p>
+<p><strong>데이터베이스 = 재료 창고</strong> — 모든 데이터(회원 정보, 상품, 주문 등)를 체계적으로 저장하고 필요할 때 꺼냅니다.</p>
+<p><strong>API = 주문서</strong> — 프론트와 백엔드가 소통하는 약속된 형식입니다. "메뉴 1번 주세요" → "음식 나왔습니다" 같은 요청-응답 패턴입니다.</p>
+</div>
+
+<div class="workflow-diagram">
+<h4>웹 서비스 아키텍처</h4>
+<div class="workflow-row"><div class="workflow-box wb-front">React / TypeScript</div><div class="workflow-box wb-front">HTML / CSS</div><div class="workflow-box wb-front">Next.js</div></div>
+<div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.3rem;">▲ 프론트엔드 — 사용자 브라우저에서 실행</div>
+<div class="vert-arrow">⬍ API 통신 (HTTP/JSON)</div>
+<div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem;">▼ 백엔드 — 서버에서 실행</div>
+<div class="workflow-row"><div class="workflow-box wb-back">FastAPI (Python)</div><div class="workflow-box wb-back">Node.js / Express</div></div>
+<div class="vert-arrow">⬍</div>
+<div class="workflow-row"><div class="workflow-box wb-db">SQLite</div><div class="workflow-box wb-db">PostgreSQL</div></div>
+</div>
+
+<h3><span class="icon">⚛️</span> 주요 기술 스택 상세 소개</h3>
+
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">📦</div><h4>npm (Node Package Manager)</h4><p>JavaScript 생태계의 패키지 관리자입니다. 다른 개발자가 만든 라이브러리를 <code>npm install 패키지명</code> 한 줄로 설치합니다. Python의 pip와 같은 역할이며, Node.js 설치 시 자동 포함됩니다.</p></div>
+<div class="grid-card"><div class="card-icon">⚛️</div><h4>React</h4><p>Meta(구 Facebook)가 만든 UI 라이브러리입니다. 화면을 <strong>컴포넌트</strong>라는 독립 블록으로 쪼개 레고처럼 조립합니다. 버튼, 카드, 네비게이션 등을 각각 만들어 조합하므로 재사용과 유지보수가 쉽습니다. 2026년 현재 가장 널리 쓰이는 프론트엔드 기술입니다.</p></div>
+<div class="grid-card"><div class="card-icon">🔷</div><h4>TypeScript</h4><p>JavaScript에 <strong>타입(Type)</strong>이라는 안전장치를 추가한 언어입니다. "이 변수는 반드시 숫자"라고 선언해두면 실수로 문자열을 넣었을 때 실행 전에 에러를 잡아줍니다. AI 코딩 도구가 타입 정보를 참고해 더 정확한 코드를 생성하므로 AI 코딩과 궁합이 매우 좋습니다.</p></div>
+<div class="grid-card"><div class="card-icon">⚡</div><h4>FastAPI (Python)</h4><p>Python으로 웹 API를 만드는 프레임워크입니다. 코드 작성 시 자동으로 API 문서 페이지(<code>/docs</code>)를 생성합니다. 비동기(async) 처리를 지원해 성능도 뛰어납니다. Python에 익숙하다면 백엔드 입문용으로 최적입니다.</p></div>
+<div class="grid-card"><div class="card-icon">🗄️</div><h4>SQLite</h4><p>별도 서버 설치 불필요한 <strong>파일 기반</strong> 경량 DB입니다. <code>data.db</code> 한 파일이 데이터베이스 전체입니다. 프로토타이핑에 매우 편리하며, 소규모 서비스에 충분합니다. 규모가 커지면 PostgreSQL로 전환합니다.</p></div>
+<div class="grid-card"><div class="card-icon">▲</div><h4>Next.js</h4><p>React 기반 <strong>풀스택 프레임워크</strong>입니다. 서버 사이드 렌더링(SSR), 정적 생성(SSG), API Routes를 지원하여 별도 백엔드 없이도 풀스택 앱을 만들 수 있습니다. 소규모 프로젝트에서 가장 효율적인 선택지입니다.</p></div>
+</div>
+
+<h3><span class="icon">💻</span> 윈도우 PC 개발 환경 세팅</h3>
+
+<p>AI 코딩을 시작하려면 아래 도구들을 설치해야 합니다. 차례대로 진행하세요.</p>
+
+<div class="step-box"><div class="step-num">1</div><h4>Node.js 설치 — JavaScript 실행 환경</h4><p>React, Next.js, npm, Gemini CLI 등 프론트엔드 도구가 Node.js 위에서 동작합니다. LTS(Long Term Support) 버전을 설치하세요.</p></div>
+<div class="step-box"><div class="step-num">2</div><h4>Python 설치 — 백엔드 및 데이터 처리</h4><p>FastAPI를 비롯한 백엔드 개발, 데이터 분석, AI/ML 작업에 필요합니다. 3.12 이상 버전을 설치하세요.</p></div>
+<div class="step-box"><div class="step-num">3</div><h4>Git 설치 — 버전 관리</h4><p>코드 변경 이력을 관리합니다. GitHub에 코드를 올리거나, Vercel에 자동 배포할 때 필수입니다.</p></div>
+<div class="step-box"><div class="step-num">4</div><h4>VS Code 설치 (선택) — 코드 편집기</h4><p>가장 널리 쓰이는 무료 편집기. Antigravity를 주력으로 쓸 예정이라면 건너뛰어도 됩니다.</p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">PowerShell (관리자 권한으로 실행)</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="cm"># Windows + X → "터미널(관리자)" 선택</span>
+
+<span class="cm"># 1. Node.js LTS 설치 (npm 자동 포함)</span>
+winget install OpenJS.NodeJS.LTS
+
+<span class="cm"># 2. Python 3.12+ 설치</span>
+winget install Python.Python.3.12
+
+<span class="cm"># 3. Git 설치</span>
+winget install Git.Git
+
+<span class="cm"># 4. VS Code (선택)</span>
+winget install Microsoft.VisualStudioCode
+
+<span class="cm"># ── 설치 확인 (터미널을 닫았다가 다시 열고) ──</span>
+node --version    <span class="cm"># v20.x 이상이면 OK</span>
+npm --version     <span class="cm"># 10.x 이상이면 OK</span>
+python --version  <span class="cm"># 3.12 이상이면 OK</span>
+git --version     <span class="cm"># 출력되면 OK</span></pre></div>
+
+<div class="callout"><div class="callout-icon">💡</div><p><strong>winget이 뭔가요?</strong> Windows 10/11에 기본 내장된 패키지 관리자입니다. 앱스토어에서 앱을 검색·설치하듯, 터미널에서 한 줄 명령으로 프로그램을 설치합니다. 안 되면 각 공식 사이트(nodejs.org, python.org)에서 직접 다운로드하세요.</p></div>
+
+<div class="callout warn"><div class="callout-icon">⚠️</div><p><strong>주의:</strong> 설치 후 터미널을 <strong>반드시 닫았다가 다시 열어야</strong> PATH가 반영됩니다. <code>node --version</code>이 안 된다면 터미널을 재시작해보세요.</p></div>
+</section>
+
+<!-- ===== CH02: GEMINI CLI ===== -->
+<section class="section" id="gemini-cli">
+<div class="section-number">Chapter 02</div>
+<h2>Gemini CLI 사용법</h2>
+<div class="section-divider"></div>
+
+<p>Gemini CLI는 Google이 오픈소스로 공개한 <strong>터미널 기반 AI 에이전트</strong>입니다. 명령 프롬프트 안에서 AI와 대화하면서 코드 작성, 파일 분석, 프로젝트 관리를 수행합니다.</p>
+
+<p>ChatGPT 같은 웹 채팅에서 코드를 복사-붙여넣기 하던 방식과 달리, Gemini CLI는 <strong>프로젝트 폴더 안에서 직접 파일을 읽고, 수정하고, 명령을 실행</strong>합니다. 옆에 앉은 동료 개발자처럼 실시간으로 함께 코딩하는 경험을 제공합니다.</p>
+
+<div class="info-card blue"><div class="card-title">🎯 무료 사용량 (개인 Google 계정)</div>
+<p>분당 <strong>60회</strong>, 일당 <strong>1,000회</strong> 요청까지 무료입니다. Google은 이 수준이 대부분 개발자 평균 사용량의 약 2배라고 밝혔습니다. Gemini 2.5 Pro(100만 토큰 컨텍스트)를 무료로 사용할 수 있어, 대형 코드베이스도 한 번에 분석 가능합니다.</p></div>
+
+<h3><span class="icon">📥</span> 설치 — 3분이면 끝</h3>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">PowerShell</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="cm"># 방법 1: 글로벌 설치 (한번 설치하면 어디서든 gemini 명령 사용)</span>
+npm install -g @google/gemini-cli
+
+<span class="cm"># 방법 2: 설치 없이 즉시 실행 (일회성)</span>
+npx @google/gemini-cli
+
+<span class="cm"># 설치 확인</span>
+gemini --version</pre></div>
+
+<div class="callout"><div class="callout-icon">💡</div><p><strong><code>npm install -g</code>란?</strong> <code>-g</code>는 "global(전역)"의 약자입니다. 이 옵션을 붙이면 컴퓨터 전체에서 사용할 수 있도록 설치합니다. <code>-g</code> 없이 설치하면 현재 폴더의 프로젝트에서만 사용됩니다.</p></div>
+
+<h3><span class="icon">🔐</span> 인증 설정 — 처음 한 번만</h3>
+
+<div class="step-box"><div class="step-num">1</div><h4>테마 선택</h4><p>터미널 배경이 어두우면 Dark, 밝으면 Light. 나중에 변경 가능합니다.</p></div>
+<div class="step-box"><div class="step-num">2</div><h4>인증 방식: "Login with Google" 선택</h4><p>가장 간단하고 무료입니다. 브라우저가 자동으로 열리며 Google 로그인 페이지가 나타납니다. 개인 계정으로 로그인하세요.</p></div>
+<div class="step-box"><div class="step-num">3</div><h4>인증 완료</h4><p>브라우저에서 권한 허용 클릭 → 터미널로 자동 복귀 → <code>></code> 프롬프트 등장. 바로 사용 가능!</p></div>
+
+<div class="callout warn"><div class="callout-icon">⚠️</div><p><strong>VPN 사용 중이라면</strong> 브라우저 콜백이 실패할 수 있습니다. VPN을 일시적으로 끄거나 글로벌 모드로 변경하세요. 회사 Workspace 계정보다 개인 계정을 권장합니다.</p></div>
+
+<h3><span class="icon">🚀</span> 사용법 상세 가이드</h3>
+
+<h4>기본 사용 — 대화형 모드</h4>
+<p>프로젝트 폴더로 이동 후 <code>gemini</code>를 입력하면 대화형 세션이 시작됩니다. AI가 해당 폴더의 파일 구조를 자동 인식합니다.</p>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">PowerShell</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="cm"># 프로젝트 폴더로 이동</span>
+cd C:\Users\사용자명\projects\my-app
+
+<span class="cm"># Gemini CLI 대화형 모드 시작</span>
+gemini
+
+<span class="cm"># 자연어로 무엇이든 질문/요청</span>
+> 이 프로젝트의 폴더 구조와 주요 파일을 분석해줘
+> src/App.tsx에 있는 버그를 찾아서 수정해줘
+> FastAPI로 사용자 관리 API를 api/ 폴더에 만들어줘
+> README.md를 한국어로 작성해줘
+
+<span class="cm"># 종료</span>
+> /quit</pre></div>
+
+<h4>원라인 프롬프트 — 빠른 작업</h4>
+<div class="code-block"><div class="code-header"><div class="code-lang">PowerShell</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="cm"># 간단한 질문</span>
+gemini -p <span class="st">"Python에서 리스트를 딕셔너리로 변환하는 방법"</span>
+
+<span class="cm"># 파일 참조하며 코드 리뷰 (@로 파일 지정)</span>
+gemini <span class="st">"이 코드의 성능을 개선해줘"</span> @src/main.py
+
+<span class="cm"># 여러 파일 동시 분석</span>
+gemini <span class="st">"두 파일의 차이점을 설명해줘"</span> @old.py @new.py
+
+<span class="cm"># CI/CD 스크립트용 JSON 출력</span>
+gemini -p <span class="st">"테스트 결과 분석"</span> --output-format json</pre></div>
+
+<h4>슬래시 명령어</h4>
+<div class="table-wrapper"><table>
+<thead><tr><th>명령어</th><th>기능</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td><code>/help</code></td><td>도움말</td><td>사용 가능한 명령어 목록</td></tr>
+<tr><td><code>/settings</code></td><td>설정</td><td>모델 변경, 프리뷰 기능 토글</td></tr>
+<tr><td><code>/chat</code></td><td>새 대화</td><td>맥락 초기화</td></tr>
+<tr><td><code>/bug</code></td><td>버그 리포트</td><td>문제 발생 시 바로 보고</td></tr>
+<tr><td><code>/quit</code></td><td>종료</td><td>세션 끝내기</td></tr>
+</tbody></table></div>
+
+<h3><span class="icon">📝</span> GEMINI.md — 프로젝트별 맥락 파일</h3>
+
+<p>프로젝트 루트에 <code>GEMINI.md</code>를 만들면 Gemini CLI가 매 세션마다 자동으로 읽어 맥락을 이해합니다. 매번 "이 프로젝트는 React + FastAPI이고..."라고 설명할 필요가 없어집니다.</p>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">GEMINI.md (프로젝트 루트에 생성)</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="cm"># 프로젝트: 인천 물류 허브 최적화 시뮬레이터</span>
+
+<span class="cm">## 기술 스택</span>
+- 프론트엔드: React 18 + TypeScript + Recharts + Leaflet
+- 백엔드: FastAPI + SQLite + gurobipy
+- 빌드: Vite
+
+<span class="cm">## 프로젝트 구조</span>
+- /src    → React 프론트엔드
+- /api    → FastAPI 백엔드
+- /data   → SQLite DB 및 시드 데이터
+
+<span class="cm">## 코딩 컨벤션</span>
+- camelCase (TS), snake_case (Python)
+- 함수형 컴포넌트 + React hooks
+- API 응답: { status, data, message }
+- 한국어 UI, 영문 코드</pre></div>
+
+<h3><span class="icon">🎯</span> 실전 활용 시나리오</h3>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">🔍</div><h4>코드베이스 분석</h4><p>"이 프로젝트의 아키텍처를 설명해줘"<br>"src에서 가장 복잡한 파일을 찾아 리팩토링 방안 제안해줘"</p></div>
+<div class="grid-card"><div class="card-icon">🐛</div><h4>버그 디버깅</h4><p>"이 에러의 원인을 분석하고 수정해줘: TypeError: Cannot read property 'map' of undefined"</p></div>
+<div class="grid-card"><div class="card-icon">🆕</div><h4>새 기능 개발</h4><p>"React 파일 업로드 컴포넌트 + FastAPI 업로드 엔드포인트를 함께 만들어줘"</p></div>
+<div class="grid-card"><div class="card-icon">📄</div><h4>문서 생성</h4><p>"설치 방법과 사용법을 포함한 README.md를 한국어로 작성해줘"</p></div>
+</div>
+</section>
+
+<!-- ===== CH03: ANTIGRAVITY ===== -->
+<section class="section" id="antigravity">
+<div class="section-number">Chapter 03</div>
+<h2>Google Antigravity</h2>
+<div class="section-divider"></div>
+
+<p>Antigravity는 2025년 11월 Gemini 3와 함께 발표된 <strong>에이전트 중심 IDE</strong>입니다. VS Code 기반이라 친숙한 편집기 느낌 그대로이지만, AI 에이전트가 코드 작성·실행·테스트·검증까지 <strong>자율적으로</strong> 수행하는 점이 근본적 차이입니다.</p>
+
+<div class="info-card purple"><div class="card-title">🧠 핵심 철학: "당신이 건축가, AI가 시공팀"</div>
+<p>기존 AI 코딩 도구(Cursor, Copilot)는 "당신이 치면 AI가 이어서 완성"하는 방식입니다. Antigravity는 뒤집어서, <strong>"무엇을 만들라고 지시하면, AI가 계획·작성·실행·테스트까지 자율 수행"</strong>합니다. 여러 에이전트가 동시에 병렬 작업도 가능합니다.</p></div>
+
+<h3><span class="icon">📥</span> 설치 단계</h3>
+<div class="step-box"><div class="step-num">1</div><h4>다운로드</h4><p><a href="https://antigravity.google" target="_blank">antigravity.google</a>에서 Windows 버전 설치 파일(.exe) 다운로드. 시스템 요구: 8GB RAM 이상, 16GB 권장.</p></div>
+<div class="step-box"><div class="step-num">2</div><h4>설치 및 초기 설정</h4><p>기존 VS Code/Cursor 설정 가져오기 또는 <strong>"Start fresh"</strong> 선택. 에디터 테마(Dark/Light) 선택.</p></div>
+<div class="step-box"><div class="step-num">3</div><h4>에이전트 모드 설정 (핵심!)</h4>
+<p><strong>Agent-driven (오토파일럿)</strong> — AI가 코드 작성·파일 생성·터미널 명령까지 자동 실행. 숙련자용.</p>
+<p><strong>Agent-assisted (권장 ⭐)</strong> — 안전한 작업은 자동, 위험한 작업(파일 삭제 등)은 승인 요청. 초보자에게 최적.</p>
+<p><strong>Review-driven (수동)</strong> — 모든 액션에 승인 필요. 가장 안전하지만 느림.</p></div>
+<div class="step-box"><div class="step-num">4</div><h4>로그인 및 모델 선택</h4><p>Google 계정 로그인 → <strong>Gemini 3 Pro</strong>(기본, 무료) 선택. Claude Sonnet 4.6, GPT-OSS도 사용 가능.</p></div>
+
+<h3><span class="icon">🖥️</span> 두 가지 화면</h3>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">✏️</div><h4>Editor View (직접 코딩)</h4><p>VS Code와 거의 동일. 왼쪽 파일 트리, 중앙 편집기, 오른쪽 AI 사이드바. 탭 자동완성, 인라인 제안 등을 제공. <strong>직접 수정하거나 빠른 변경 시</strong> 사용합니다.</p></div>
+<div class="grid-card"><div class="card-icon">🎛️</div><h4>Manager View (미션 컨트롤)</h4><p>Antigravity 고유 기능. <strong>여러 AI 에이전트의 동시 작업 현황</strong>을 한눈에 확인하는 대시보드. 에이전트별 진행 상황, 계획서, 결과물을 모니터링합니다.</p></div>
+</div>
+
+<h3><span class="icon">🤖</span> 에이전트 작업 방식</h3>
+
+<div class="flow">
+<div class="flow-step">📝 지시</div><div class="flow-arrow">→</div>
+<div class="flow-step">📋 Plan Artifact</div><div class="flow-arrow">→</div>
+<div class="flow-step">💻 코드 작성</div><div class="flow-arrow">→</div>
+<div class="flow-step">▶️ 터미널 실행</div><div class="flow-arrow">→</div>
+<div class="flow-step">🌐 브라우저 테스트</div><div class="flow-arrow">→</div>
+<div class="flow-step">✅ 결과 Artifact</div>
+</div>
+
+<p>에이전트는 각 단계에서 <strong>Artifact</strong>(계획서, 구현 내역, 스크린샷, 브라우저 녹화 등)를 생성합니다. 개발자는 Google Docs처럼 댓글을 달아 피드백하고, 에이전트가 즉시 반영합니다.</p>
+
+<h4>Plan 모드 vs Fast 모드</h4>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">📋</div><h4>Plan 모드 (큰 작업)</h4><p>"회원가입 기능 구현" 같은 큰 작업. 에이전트가 상세 실행 계획서를 먼저 보여주고, 승인 후 단계별 실행.</p></div>
+<div class="grid-card"><div class="card-icon">⚡</div><h4>Fast 모드 (빠른 수정)</h4><p>"버튼 색상 변경", "오타 수정" 같은 작은 작업. 계획 없이 즉시 코드 수정.</p></div>
+</div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">Antigravity 프롬프트 예시</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="cm"># Plan 모드 — 큰 기능 개발</span>
+React + FastAPI로 회원가입/로그인 기능을 만들어줘.
+- JWT 토큰 인증, SQLite DB, bcrypt 해싱
+- 프론트엔드 폼 검증과 에러 메시지 표시
+- 로그인 후 대시보드로 리다이렉트
+
+<span class="cm"># Fast 모드 — 빠른 수정</span>
+헤더 배경색을 #1a1a28로 변경하고,
+모바일에서 햄버거 메뉴가 나오도록 반응형 처리해줘.
+
+<span class="cm"># 브라우저 테스트 요청</span>
+로그인 페이지에서 잘못된 비밀번호 입력 시
+에러 메시지가 정상 표시되는지 확인해줘.</pre></div>
+
+<div class="callout ok"><div class="callout-icon">✅</div><p><strong>Gemini CLI vs Antigravity?</strong><br>
+<strong>Gemini CLI:</strong> 터미널 중심, 가볍고 빠름, 스크립트/자동화에 적합.<br>
+<strong>Antigravity:</strong> GUI 중심, 에이전트 자율 실행, 브라우저 테스트 내장, 큰 프로젝트에 적합.<br>
+빠른 작업은 CLI, 큰 기능은 Antigravity로 역할을 나누는 것도 좋습니다.</p></div>
+</section>
+
+<!-- ===== CH04: AI STUDIO ===== -->
+<section class="section" id="ai-studio">
+<div class="section-number">Chapter 04</div>
+<h2>Google AI Studio 사용법</h2>
+<div class="section-divider"></div>
+
+<p>Google AI Studio는 <strong>브라우저에서 바로</strong> Gemini 모델을 사용하는 무료 웹 도구입니다. 설치 없이, 프롬프트만 입력하면 즉시 코드를 생성합니다. <strong>AI 코딩 진입 장벽이 가장 낮은 도구</strong>입니다.</p>
+
+<h3><span class="icon">🌐</span> 시작하기 — 60초</h3>
+<div class="step-box"><div class="step-num">1</div><h4>접속</h4><p><a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> 접속. 모든 최신 브라우저에서 동작합니다.</p></div>
+<div class="step-box"><div class="step-num">2</div><h4>로그인</h4><p>Google 개인 계정으로 로그인합니다.</p></div>
+<div class="step-box"><div class="step-num">3</div><h4>모델 선택</h4><p><strong>Gemini 3 Pro</strong>(최고 품질) 또는 <strong>Gemini 2.5 Flash</strong>(빠른 응답) 추천.</p></div>
+<div class="step-box"><div class="step-num">4</div><h4>프롬프트 입력</h4><p>만들고 싶은 것을 한국어로 설명하면 바로 코드 생성 시작!</p></div>
+
+<h3><span class="icon">✨</span> 주요 기능</h3>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">💬</div><h4>Chat 모드</h4><p>대화하면서 코드를 생성·수정. 이전 맥락을 유지하며 점진적으로 개선합니다. 초보자에게 가장 친숙한 방식.</p></div>
+<div class="grid-card"><div class="card-icon">📄</div><h4>Structured Prompt</h4><p>시스템 지시문(System Instruction)으로 "항상 TypeScript로, 한국어 주석으로"를 한 번 설정하면 매번 반복 불필요.</p></div>
+<div class="grid-card"><div class="card-icon">🖼️</div><h4>멀티모달 입력</h4><p>이미지, PDF, 오디오 업로드 가능. <strong>스크린샷 → 코드 변환</strong>이 핵심 활용법. 원하는 디자인 캡처 후 "이 화면을 React로 구현해줘".</p></div>
+<div class="grid-card"><div class="card-icon">🔑</div><h4>API Key 발급</h4><p>Gemini CLI, 자체 앱에서 쓸 API 키를 여기서 발급. "Get API Key" → "Create API Key". 무료 할당량 제공.</p></div>
+</div>
+
+<h3><span class="icon">🎯</span> Vibe Coding 예시</h3>
+<p><strong>Vibe Coding</strong>이란, 세세한 로직을 직접 짜는 대신 AI에게 원하는 것을 자연어로 설명하는 코딩 방식입니다.</p>
+
+<h4>예시 1: 프론트엔드 대시보드</h4>
+<div class="code-block"><div class="code-header"><div class="code-lang">AI Studio 프롬프트</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>React + TypeScript로 물류 대시보드를 만들어줘.
+
+<span class="cm">## 화면 구성</span>
+1. 상단: 4개 KPI 카드 (배송건수, 평균 배송시간, 성공률, 비용)
+2. 중앙: 최근 7일 배송 추이 라인 차트 (Recharts)
+3. 하단: 배송 목록 테이블 (10행, 상태 뱃지)
+
+<span class="cm">## 디자인</span>
+- 다크 테마 (배경: #0f172a), 블루 악센트 (#3b82f6)
+- 카드: border-radius 12px, 미세한 글로우
+- 샘플 데이터 하드코딩 포함
+- 하나의 파일로 출력</pre></div>
+
+<h4>예시 2: 백엔드 API</h4>
+<div class="code-block"><div class="code-header"><div class="code-lang">AI Studio 프롬프트</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>FastAPI + SQLite로 상품 관리 REST API를 만들어줘.
+
+- 상품 CRUD, Pydantic 모델, CORS 설정
+- 페이지네이션 (?page=1&size=20)
+- 검색 기능 (?search=키워드)
+- 에러 핸들링 (404, 422)
+- requirements.txt, 실행 명령어 포함</pre></div>
+
+<h4>예시 3: 스크린샷 → 코드</h4>
+<p>📎 아이콘으로 이미지를 업로드하고:</p>
+<div class="code-block"><div class="code-header"><div class="code-lang">프롬프트 (이미지와 함께)</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>이 스크린샷과 동일한 UI를 React + Tailwind CSS로 구현해줘.
+레이아웃, 색상, 여백을 최대한 비슷하게. 반응형. 샘플 데이터 포함.</pre></div>
+
+<div class="callout"><div class="callout-icon">⚡</div><p><strong>효율적 워크플로우:</strong> AI Studio에서 생성 → 복사 → 로컬 파일에 붙여넣기 → 브라우저 확인 → 수정 필요 시 AI Studio에서 추가 요청. 이 사이클이 Vibe Coding의 핵심입니다.</p></div>
+</section>
+
+<!-- ===== CH05: STITCH ===== -->
+<section class="section" id="stitch">
+<div class="section-number">Chapter 05</div>
+<h2>Stitch로 세련된 디자인 적용하기</h2>
+<div class="section-divider"></div>
+
+<p>Google Stitch는 <strong>"말로 설명하면 UI 디자인을 만들어주는"</strong> AI 도구입니다. 텍스트 프롬프트, 손그림 스케치, 기존 앱 스크린샷을 입력하면 완성도 높은 UI + <strong>바로 쓸 수 있는 HTML/CSS 코드</strong>를 생성합니다.</p>
+
+<p>Google I/O 2025에서 공개되었으며, 원래 Galileo AI를 인수·Gemini 기반으로 재구축한 것입니다. 디자이너가 아닌 개발자도 프로페셔널 UI를 빠르게 만들 수 있습니다.</p>
+
+<h3><span class="icon">🎨</span> 시작하기</h3>
+<div class="step-box"><div class="step-num">1</div><h4>접속</h4><p><a href="https://stitch.withgoogle.com" target="_blank">stitch.withgoogle.com</a> → Google 계정 로그인. 별도 설치 불필요.</p></div>
+<div class="step-box"><div class="step-num">2</div><h4>모드 선택</h4>
+<p><strong>Standard</strong> (Gemini Flash) — 빠른 생성, Figma 내보내기 지원.</p>
+<p><strong>Experimental</strong> (Gemini Pro) — 높은 품질, 이미지 참조 가능. Figma 미지원.</p>
+<p>처음엔 Standard로, 이미지 참조가 필요할 때 Experimental 전환을 추천합니다.</p></div>
+<div class="step-box"><div class="step-num">3</div><h4>프롬프트 입력</h4><p>만들 UI를 자연어로 설명. 구체적일수록 결과가 좋습니다.</p></div>
+<div class="step-box"><div class="step-num">4</div><h4>디자인 선택·커스터마이징</h4><p>여러 변형 중 선택 → 사이드바에서 색상·폰트·테마 조정.</p></div>
+<div class="step-box"><div class="step-num">5</div><h4>코드 내보내기</h4><p>HTML/CSS 코드 복사 또는 Figma 내보내기(Standard 모드).</p></div>
+
+<h3><span class="icon">🖌️</span> 프롬프트 작성 비교</h3>
+<div class="compare-row">
+<div class="compare-col"><h4 style="color:var(--accent-red);">❌ 나쁜 예시</h4>
+<div class="code-block"><div class="code-header"><div class="code-lang">모호한 프롬프트</div><div class="code-dots"><span></span><span></span><span></span></div></div><pre>물류 앱 만들어줘</pre></div>
+<p style="font-size:0.9rem;color:var(--text-muted);">→ 너무 모호해서 일반적이고 밋밋한 결과</p></div>
+<div class="compare-col"><h4 style="color:var(--accent-green);">✅ 좋은 예시</h4>
+<div class="code-block"><div class="code-header"><div class="code-lang">구체적인 프롬프트</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>배송 추적 모바일 앱 UI.
+흰색 배경, 코발트 블루(#1E40AF),
+라운드 카드(16px), 상단 검색바,
+카드형 배송 목록, 하단 탭 4개.
+깔끔한 한국 핀테크 스타일.</pre></div>
+<p style="font-size:0.9rem;color:var(--text-muted);">→ 색상·레이아웃·스타일이 명확</p></div>
+</div>
+
+<h3><span class="icon">⚙️</span> 커스터마이징 옵션</h3>
+<div class="table-wrapper"><table>
+<thead><tr><th>항목</th><th>설명</th><th>팁</th></tr></thead>
+<tbody>
+<tr><td><strong>테마</strong></td><td>라이트 ↔ 다크</td><td>같은 디자인을 두 테마로 비교</td></tr>
+<tr><td><strong>컬러 스킴</strong></td><td>Primary/Secondary/Accent 변경</td><td>브랜드 컬러 입력으로 일관성 유지</td></tr>
+<tr><td><strong>폰트</strong></td><td>타이포그래피 변경</td><td>한글: Pretendard, Noto Sans KR</td></tr>
+<tr><td><strong>모서리</strong></td><td>라운드 ↔ 샤프</td><td>16px: 부드러운, 4px: 날카로운</td></tr>
+<tr><td><strong>자연어 수정</strong></td><td>"버튼 더 크게" 등</td><td>세세한 조정에 편리</td></tr>
+</tbody></table></div>
+
+<h3><span class="icon">📤</span> 후속 작업 연계</h3>
+<div class="flow">
+<div class="flow-step">🎨 Stitch 디자인</div><div class="flow-arrow">→</div>
+<div class="flow-step">📋 HTML/CSS 복사</div><div class="flow-arrow">→</div>
+<div class="flow-step">💻 Antigravity에 붙여넣기</div><div class="flow-arrow">→</div>
+<div class="flow-step">🔧 로직 연결</div><div class="flow-arrow">→</div>
+<div class="flow-step">🚀 완성!</div>
+</div>
+
+<div class="info-card blue"><div class="card-title">🔄 추천: Stitch + Antigravity 연계</div>
+<p><strong>1.</strong> Stitch에서 UI 생성 → HTML/CSS export</p>
+<p><strong>2.</strong> Antigravity에서 새 프로젝트 열고 붙여넣기</p>
+<p><strong>3.</strong> "이 HTML을 React 컴포넌트로 변환하고, FastAPI 백엔드를 연결해줘"</p>
+<p><strong>4.</strong> 에이전트가 풀스택 앱 자동 구축 → 브라우저 테스트까지 수행</p></div>
+</section>
+
+<!-- ===== CH06: DESIGN COPY ===== -->
+<section class="section" id="design-copy">
+<div class="section-number">Chapter 06</div>
+<h2>주요 서비스 디자인 카피 전략</h2>
+<div class="section-divider"></div>
+
+<p>AI에게 "세련된 디자인으로"라고 말하려면, <strong>좋은 디자인이 뭔지 설명할 수 있어야</strong> 합니다. 가장 실용적인 방법은 잘 만든 서비스의 디자인 시스템을 분석하고 핵심 원리를 차용하는 것입니다.</p>
+
+<h3><span class="icon">🔍</span> 디자인 분석 4요소</h3>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">🎨</div><h4>1. Color Palette</h4><p>보통 5~8개 색상. Primary, Background, Text, Accent 등. Chrome DevTools(F12)에서 CSS 변수 확인.</p></div>
+<div class="grid-card"><div class="card-icon">🔤</div><h4>2. Typography</h4><p>폰트 패밀리, 사이즈 스케일(12~48px), 줄 높이(1.5~1.8). 한글: Pretendard, Noto Sans KR.</p></div>
+<div class="grid-card"><div class="card-icon">📐</div><h4>3. Spacing</h4><p>세련됨 = 일관된 간격. 8px 배수 체계(8/16/24/32/48px)가 업계 표준.</p></div>
+<div class="grid-card"><div class="card-icon">🧩</div><h4>4. Components</h4><p>버튼·카드·입력폼·네비게이션 등 반복 UI 블록의 공통 스타일.</p></div>
+</div>
+
+<h3><span class="icon">🛠️</span> DevTools로 분석하는 법</h3>
+<div class="step-box"><div class="step-num">1</div><h4>F12로 DevTools 열기</h4><p>원하는 요소 우클릭 → "검사(Inspect)" 선택.</p></div>
+<div class="step-box"><div class="step-num">2</div><h4>색상 추출</h4><p>Styles 패널에서 <code>background-color</code>, <code>color</code> 확인. <code>:root</code>에서 CSS 변수를 찾으면 전체 팔레트 파악 가능.</p></div>
+<div class="step-box"><div class="step-num">3</div><h4>폰트 확인</h4><p>텍스트 선택 → Computed 탭에서 <code>font-family</code>, <code>font-size</code>, <code>font-weight</code> 확인.</p></div>
+<div class="step-box"><div class="step-num">4</div><h4>여백 파악</h4><p>Box Model 다이어그램에서 margin/padding 패턴을 비교.</p></div>
+
+<h3><span class="icon">🏢</span> 서비스별 디자인 특징</h3>
+<div class="table-wrapper"><table>
+<thead><tr><th>서비스</th><th>컬러</th><th>폰트</th><th>특징</th></tr></thead>
+<tbody>
+<tr><td><strong>토스</strong></td><td>White + #3182F6</td><td>Toss Product Sans</td><td>극도의 미니멀, 넓은 여백, 큰 숫자</td></tr>
+<tr><td><strong>배달의민족</strong></td><td>#2AC1BC + White</td><td>배민 자체 서체</td><td>일러스트, 라운드 카드, 친근함</td></tr>
+<tr><td><strong>카카오</strong></td><td>#FEE500 + Dark</td><td>Apple SD Gothic</td><td>옐로 포인트, 깔끔한 리스트</td></tr>
+<tr><td><strong>Linear</strong></td><td>Dark + Purple</td><td>Inter</td><td>다크 테마, 글래스모피즘, 키보드 UX</td></tr>
+<tr><td><strong>Vercel</strong></td><td>Black + White</td><td>Geist</td><td>극단적 흑백, 타이포 중심</td></tr>
+</tbody></table></div>
+
+<h3><span class="icon">🤖</span> AI에 디자인 전달하기</h3>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">AI에 전달할 디자인 스펙 (토스 스타일)</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>아래 디자인 시스템을 적용해 대시보드를 만들어줘.
+
+<span class="cm">## Color</span>
+Background: #F2F4F6 / Card: #FFFFFF / Primary: #3182F6
+Text: #191F28 / Text-Secondary: #8B95A1
+
+<span class="cm">## Typography</span>
+Font: 'Pretendard', sans-serif
+Sizes: 13/15/17/22/28/34px / Weight: 400/600/700
+
+<span class="cm">## Spacing (8px grid)</span>
+xs:8 / sm:16 / md:24 / lg:32 / xl:48px
+
+<span class="cm">## Components</span>
+Card: radius 16px, shadow 0 2px 8px rgba(0,0,0,0.04)
+Button: radius 12px, padding 12px 24px
+아이콘: lucide-react, 20px</pre></div>
+
+<h4>CSS 변수로 테마 시스템 구축</h4>
+<div class="code-block"><div class="code-header"><div class="code-lang">CSS 변수 시스템</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="kw">:root</span> {
+  <span class="vr">--color-primary</span>: <span class="st">#3182F6</span>;
+  <span class="vr">--color-bg</span>: <span class="st">#F2F4F6</span>;
+  <span class="vr">--color-card</span>: <span class="st">#FFFFFF</span>;
+  <span class="vr">--color-text</span>: <span class="st">#191F28</span>;
+  <span class="vr">--radius</span>: <span class="st">16px</span>;
+  <span class="vr">--shadow</span>: <span class="st">0 2px 8px rgba(0,0,0,0.04)</span>;
+  <span class="vr">--space-sm</span>: <span class="st">16px</span>;
+  <span class="vr">--space-md</span>: <span class="st">24px</span>;
+  <span class="vr">--space-lg</span>: <span class="st">32px</span>;
+}
+
+<span class="cm">/* 다크 테마 전환 — 변수만 바꾸면 됨 */</span>
+<span class="kw">[data-theme="dark"]</span> {
+  <span class="vr">--color-bg</span>: <span class="st">#0f172a</span>;
+  <span class="vr">--color-card</span>: <span class="st">#1e293b</span>;
+  <span class="vr">--color-text</span>: <span class="st">#e2e8f0</span>;
+}</pre></div>
+
+<div class="callout"><div class="callout-icon">🎯</div><p><strong>핵심:</strong> 색상 5~8개, 폰트 사이즈 5~6단계, 여백 4~6단계를 정하고 <strong>전체 앱에서 일관되게</strong> 사용하세요. CSS 변수로 관리하면 테마 교체도 변수값만 바꾸면 됩니다.</p></div>
+</section>
+
+<!-- ===== CH07: CLOUD DEPLOY ===== -->
+<section class="section" id="cloud-deploy">
+<div class="section-number">Chapter 07</div>
+<h2>클라우드 서비스에 배포하기</h2>
+<div class="section-divider"></div>
+
+<p>로컬(localhost)에서 동작하는 서비스를 <strong>전 세계 누구나 접속</strong>할 수 있게 하려면 클라우드 서버에 배포해야 합니다. "배포(Deploy)" = 코드를 인터넷 서버에 올려 실행하는 것입니다.</p>
+
+<h3><span class="icon">🧠</span> 배포 개념</h3>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">💻</div><h4>로컬 개발 (지금까지)</h4><p>내 PC에서만 접속 가능. <code>localhost:3000</code>은 다른 사람이 볼 수 없습니다.</p></div>
+<div class="grid-card"><div class="card-icon">☁️</div><h4>클라우드 배포 (앞으로)</h4><p>인터넷 서버에 올려 <code>https://my-app.vercel.app</code> 같은 URL로 전 세계 접속 가능.</p></div>
+</div>
+
+<div class="callout"><div class="callout-icon">💡</div><p><strong>PaaS vs VPS 차이:</strong><br>
+<strong>PaaS</strong>(Vercel, Railway, Cloud Run) = "관리형" — 코드만 올리면 서버를 알아서 관리. 편하지만 자유도 낮음.<br>
+<strong>VPS</strong>(Oracle, Hetzner, DigitalOcean) = 가상 컴퓨터를 통째로 빌림. 직접 설정해야 하지만 무엇이든 가능.<br>
+<strong>초보자는 PaaS로 시작</strong>하고, 지식이 쌓이면 VPS 전환을 추천합니다.</p></div>
+
+<h3><span class="icon">🏗️</span> 배포 아키텍처</h3>
+<div class="workflow-diagram">
+<h4>일반적인 배포 구조</h4>
+<div class="workflow-row"><div class="workflow-box wb-tool">사용자 (브라우저)</div></div>
+<div class="vert-arrow">⬇ URL 접속</div>
+<div class="workflow-row"><div class="workflow-box wb-cloud">CDN / 도메인 (Cloudflare)</div></div>
+<div class="vert-arrow">⬇</div>
+<div class="workflow-row"><div class="workflow-box wb-front">프론트엔드 (Vercel)</div><div class="workflow-box wb-back">백엔드 API (Cloud Run)</div></div>
+<div class="vert-arrow">⬇</div>
+<div class="workflow-row"><div class="workflow-box wb-db">DB (SQLite / PostgreSQL)</div></div>
+</div>
+
+<h3><span class="icon">💰</span> 옵션 비교</h3>
+<div class="table-wrapper"><table>
+<thead><tr><th>서비스</th><th>용도</th><th>비용</th><th>난이도</th><th>특징</th></tr></thead>
+<tbody>
+<tr><td><strong>Vercel</strong> <span class="tag free">FREE</span></td><td>프론트엔드</td><td>무료</td><td>⭐</td><td>Git push 자동 배포, CDN, HTTPS</td></tr>
+<tr><td><strong>Netlify</strong> <span class="tag free">FREE</span></td><td>프론트엔드</td><td>무료</td><td>⭐</td><td>Vercel 유사, Serverless Functions</td></tr>
+<tr><td><strong>Cloud Run</strong> <span class="tag free">FREE</span></td><td>백엔드 API</td><td>무료 할당량</td><td>⭐⭐</td><td>Docker 기반, 서울 리전, 요청 없으면 0원</td></tr>
+<tr><td><strong>Railway</strong> <span class="tag paid">$5~</span></td><td>풀스택+DB</td><td>~$5/월</td><td>⭐</td><td>Heroku 대안, DB 포함, 간단</td></tr>
+<tr><td><strong>Oracle Cloud</strong> <span class="tag free">FREE</span></td><td>VPS</td><td>영구 무료</td><td>⭐⭐⭐</td><td>ARM VM 2대 무료, 풀 제어</td></tr>
+<tr><td><strong>Hetzner</strong> <span class="tag paid">€4~</span></td><td>VPS</td><td>~€4/월</td><td>⭐⭐⭐</td><td>가성비 최고, 높은 성능</td></tr>
+</tbody></table></div>
+
+<h3><span class="icon">🎯</span> 예산별 추천 조합</h3>
+<div class="grid-2">
+<div class="grid-card"><div class="card-icon">🆓</div><h4>무료 ($0)</h4><p><strong>Vercel</strong> + <strong>Cloud Run</strong> + <strong>SQLite</strong>. 개인 프로젝트·MVP에 적합.</p></div>
+<div class="grid-card"><div class="card-icon">💵</div><h4>저예산 (~$5/월)</h4><p><strong>Vercel</strong> + <strong>Railway</strong>(+PostgreSQL). 소규모 실서비스.</p></div>
+<div class="grid-card"><div class="card-icon">💰</div><h4>중간 (~$15/월)</h4><p><strong>DigitalOcean App Platform</strong> 또는 <strong>Hetzner VPS + Docker</strong>.</p></div>
+<div class="grid-card"><div class="card-icon">🏢</div><h4>프로덕션 ($30+)</h4><p><strong>AWS / GCP</strong> 풀 인프라. Auto-scaling, 모니터링, CI/CD.</p></div>
+</div>
+
+<h3><span class="icon">📦</span> 실전: Vercel + Cloud Run</h3>
+
+<h4>PART A — 프론트엔드 → Vercel</h4>
+
+<div class="step-box"><div class="step-num">1</div><h4>GitHub에 코드 올리기</h4><p>프로젝트를 GitHub 리포에 push합니다.</p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">PowerShell</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>cd my-react-app
+git init
+git add .
+git commit -m <span class="st">"first commit"</span>
+git remote add origin https://github.com/내아이디/my-react-app.git
+git push -u origin main</pre></div>
+
+<div class="step-box"><div class="step-num">2</div><h4>Vercel에 연결</h4><p><a href="https://vercel.com" target="_blank">vercel.com</a> → GitHub 로그인 → "New Project" → 리포 선택 → "Deploy" 클릭. 이후 <strong>push마다 자동 배포</strong>됩니다.</p></div>
+
+<div class="step-box"><div class="step-num">3</div><h4>또는 CLI로 배포</h4><p><code>npm install -g vercel</code> → <code>vercel</code> 명령 실행. 몇 가지 질문 후 URL이 발급됩니다.</p></div>
+
+<h4>PART B — 백엔드(FastAPI) → Cloud Run</h4>
+
+<div class="step-box"><div class="step-num">1</div><h4>Dockerfile 작성</h4><p>Cloud Run은 Docker 컨테이너를 실행합니다. "코드+실행환경을 하나로 묶는 레시피"입니다.</p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">Dockerfile</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="kw">FROM</span> python:3.12-slim
+<span class="kw">WORKDIR</span> /app
+<span class="kw">COPY</span> requirements.txt .
+<span class="kw">RUN</span> pip install --no-cache-dir -r requirements.txt
+<span class="kw">COPY</span> . .
+<span class="kw">EXPOSE</span> 8080
+<span class="kw">CMD</span> [<span class="st">"uvicorn"</span>, <span class="st">"main:app"</span>, <span class="st">"--host"</span>, <span class="st">"0.0.0.0"</span>, <span class="st">"--port"</span>, <span class="st">"8080"</span>]</pre></div>
+
+<div class="step-box"><div class="step-num">2</div><h4>gcloud CLI 설치 및 배포</h4><p><a href="https://cloud.google.com/sdk" target="_blank">cloud.google.com/sdk</a>에서 설치 후:</p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">PowerShell</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>gcloud init
+gcloud config set project MY_PROJECT_ID
+
+<span class="cm"># 소스에서 직접 배포 (Docker 빌드 자동)</span>
+gcloud run deploy my-api ^
+  --source . ^
+  --region asia-northeast3 ^
+  --allow-unauthenticated
+
+<span class="cm"># 결과: https://my-api-abc123-du.a.run.app</span></pre></div>
+
+<h4>PART C — 프론트↔백엔드 연결</h4>
+
+<div class="step-box"><div class="step-num">1</div><h4>환경변수 설정</h4><p>프론트 프로젝트에 <code>.env.production</code> 파일 생성:</p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">.env.production</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre>VITE_API_URL=https://my-api-abc123-du.a.run.app</pre></div>
+
+<div class="step-box"><div class="step-num">2</div><h4>코드에서 사용</h4><p></p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">TypeScript</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="kw">const</span> API = <span class="kw">import</span>.meta.env.VITE_API_URL;
+<span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">`${API}/api/items`</span>);</pre></div>
+
+<div class="step-box"><div class="step-num">3</div><h4>CORS 설정 (필수!)</h4><p>프론트(vercel.app)→백엔드(run.app) 호출 시 브라우저가 차단합니다. FastAPI에서 허용 설정:</p></div>
+
+<div class="code-block"><div class="code-header"><div class="code-lang">Python (main.py)</div><div class="code-dots"><span></span><span></span><span></span></div></div>
+<pre><span class="kw">from</span> fastapi.middleware.cors <span class="kw">import</span> CORSMiddleware
+
+app.<span class="fn">add_middleware</span>(
+    CORSMiddleware,
+    allow_origins=[
+        <span class="st">"http://localhost:5173"</span>,
+        <span class="st">"https://my-app.vercel.app"</span>,
+    ],
+    allow_credentials=True,
+    allow_methods=[<span class="st">"*"</span>],
+    allow_headers=[<span class="st">"*"</span>],
+)</pre></div>
+
+<div class="info-card orange"><div class="card-title">🚀 배포 전 체크리스트</div>
+<p><strong>환경변수:</strong> API 키·DB 비밀번호는 코드에 넣지 말고 각 플랫폼 환경변수로 관리</p>
+<p><strong>HTTPS:</strong> PaaS는 자동 제공. VPS는 Let's Encrypt(무료) 사용</p>
+<p><strong>도메인:</strong> 가비아/Cloudflare에서 구매 → CNAME 연결</p>
+<p><strong>모니터링:</strong> Sentry(무료 플랜) 연동으로 에러 실시간 추적</p>
+<p><strong>백업:</strong> SQLite는 파일 복사, PostgreSQL은 pg_dump</p></div>
+
+<h3><span class="icon">🔄</span> 전체 워크플로우</h3>
+<div class="flow">
+<div class="flow-step">💡 아이디어</div><div class="flow-arrow">→</div>
+<div class="flow-step">🎨 Stitch UI</div><div class="flow-arrow">→</div>
+<div class="flow-step">🤖 Antigravity 개발</div><div class="flow-arrow">→</div>
+<div class="flow-step">🧪 로컬 테스트</div><div class="flow-arrow">→</div>
+<div class="flow-step">☁️ 배포</div><div class="flow-arrow">→</div>
+<div class="flow-step">🌐 서비스 오픈!</div>
+</div>
+
+<div class="callout ok"><div class="callout-icon">🎉</div><p><strong>축하합니다!</strong> 이 가이드의 모든 단계를 따라왔다면, <strong>아이디어 → AI 디자인 → AI 코딩 → 클라우드 배포</strong>의 전체 사이클을 수행할 수 있습니다. AI 도구는 빠르게 발전하므로 공식 문서를 주기적으로 확인하세요.</p></div>
+</section>
+
+</div>
+
+<footer class="footer">
+<p>Windows PC AI 코딩 완전 가이드 · 2026 Edition</p>
+<p style="margin-top:0.5rem;color:var(--text-muted);">Gemini CLI · Antigravity · AI Studio · Stitch · Cloud Deploy</p>
+</footer>
+</body>
+</html>
